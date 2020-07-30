@@ -1,0 +1,45 @@
+#!/bin/bash -l
+#SBATCH -A haldane
+#SBATCH --partition=short               ### Partition
+#SBATCH --job-name=plot_1d_lineages     ### Job Name
+#SBATCH --time=24:00:00                 ### WallTime
+#SBATCH --nodes=1                       ### Number of Nodes
+#SBATCH --ntasks=1                      ### Number of tasks per array job
+#SBATCH --mem=32G
+#SBATCH --job-name=SLiM-Benchmark
+#SBATCH --output=slimbench.out.%j
+
+SLIM_BENCHTHREADS="1"
+export SLIM_BENCHTHREADS
+
+if [ -z ${SLIM} -o ! -x ${SLIM} ]
+then
+    echo "Must set the shell variable SLIM to the path of a slim executable."
+    exit 1
+else
+    echo "Using slim executable $SLIM"
+fi
+
+# run all models
+bash ./run_treeseq.sh $SLIM
+
+# run specified models
+# bash ./runone.sh neutral_WF 1
+# bash ./runone.sh nonneutral_WF 1
+# bash ./runone.sh T_CalculateAllDistances1D 1
+# bash ./runone.sh T_CalculateAllDistances2D 1
+# bash ./runone.sh T_CalculateAllDistances3D 1
+# bash ./runone.sh T_CalculateAllStrengths1D 1
+# bash ./runone.sh T_CalculateAllStrengths2D 1
+# bash ./runone.sh T_CalculateAllStrengths3D 1
+# bash ./runone.sh T_set_fitnessScaling_1 1
+# bash ./runone.sh T_set_fitnessScaling_2 1
+# bash ./runone.sh T_sum_float 1
+# bash ./runone.sh T_sum_integer 1
+# bash ./runone.sh T_sum_logical 1
+# bash ./runone.sh T_sumOfMutationsOfType 1
+# bash ./runone.sh treeseq_edges 1
+# bash ./runone.sh treeseq_simplify 1
+# bash ./runone.sh turnover_nonWF 1
+# bash ./runone.sh turnover_WF 1
+
